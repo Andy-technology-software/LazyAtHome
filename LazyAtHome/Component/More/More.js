@@ -46,7 +46,7 @@ var More = React.createClass({
                             title='扫一扫'
                         />
                         <CommonCell
-                            title='扫一扫'
+                            title='加油'
                         /><CommonCell
                             title='清空缓存'
                             rightTitle='1.99M'
