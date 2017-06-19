@@ -28,7 +28,7 @@ var Main = React.createClass({
     //初始化函数（变量是可以改变的，充当状态机的角色）
     getInitialState(){
         return{
-            selectedTab: 'home' //默认是第一个
+            selectedTab: 'mine' //默认是第一个
         }
     },
 

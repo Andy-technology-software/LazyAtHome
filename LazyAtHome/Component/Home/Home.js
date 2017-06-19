@@ -21,12 +21,15 @@ var {width, heigth} = Dimensions.get('window');
 //引入详情页
 var HomeDetail = require('./HomeDetail/HomeDetail');
 
+//引入选地址页
+var SelectAddress = require('./SelectAddress/SelectAddress');
+
 var Home = React.createClass({
     render() {
         return (
             <View style={styles.container}>
                 {/*首页导航条*/}
-                {this.renderBavBar()}
+                {this.renderNavBar()}
 
                 <TouchableOpacity onPress={()=>{this.pushToDetail()}}>
                     <Text>首页</Text>
@@ -36,12 +39,12 @@ var Home = React.createClass({
     },
 
     //首页导航条
-    renderBavBar(){
+    renderNavBar(){
         return(
             <View style={styles.navBarStyle}>
 
                 {/*左边*/}
-                <TouchableOpacity onPress={()=>{AlertIOS.alert('点击地点')}}>
+                <TouchableOpacity onPress={()=>{this.pushToSelectAddress()}}>
                     <Text style={{color: 'white'}}>广州</Text>
                 </TouchableOpacity>
 
@@ -62,6 +65,14 @@ var Home = React.createClass({
                 </View>
             </View>
         )
+    },
+
+    //跳转到选地址界面
+    pushToSelectAddress(){
+        this.props.navigator.push({
+            component: SelectAddress,
+            title: '选择地址'
+        });
     },
 
     //跳转二级界面
