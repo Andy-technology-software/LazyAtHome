@@ -23,7 +23,10 @@ var Mine = React.createClass({
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView>
+                <ScrollView
+                    //吸顶效果
+
+                >
                     {/*上部分view*/}
                     <MineTopView />
 

@@ -24,13 +24,20 @@ var Shop = require('../Shop/Shop');
 var Mine = require('../Mine/Mine');
 var More = require('../More/More');
 
-var Main = React.createClass({
+class Main extends Component{
     //初始化函数（变量是可以改变的，充当状态机的角色）
-    getInitialState(){
-        return{
-            selectedTab: 'mine' //默认是第一个
+    // getInitialState(){
+    //     return{
+    //         selectedTab: 'home' //默认是第一个
+    //     }
+    // },
+
+    constructor(){
+        super();
+        this.state = {
+            selectedTab: 'home'
         }
-    },
+    }
 
     render() {
         return (
@@ -45,7 +52,7 @@ var Main = React.createClass({
                 {this.renderTabBarItem('更多', 'icon_tabbar_misc', 'icon_tabbar_misc_selected','more', '更多', More)}
             </TabNavigator>
         );
-    },
+    }
 
     // 每一个TabBarItem
     renderTabBarItem(title, iconName, selectedIconName, selectedTab, componentName, component, badgeText){
@@ -72,7 +79,7 @@ var Main = React.createClass({
             </TabNavigator.Item>
         )
     }
-});
+}
 
 const styles = StyleSheet.create({
     iconStyle: {

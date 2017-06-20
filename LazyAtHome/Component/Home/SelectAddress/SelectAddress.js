@@ -7,14 +7,20 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    WebView
 } from 'react-native';
+
+{/*-----引入外部组件-----*/}
+import SelectAddWebView from './SelectAddWebView';
 
 var SelectAddress = React.createClass({
     render() {
         return (
             <View style={styles.container}>
-                <Text>选地址</Text>
+                <SelectAddWebView
+                    url="http://localhost:63342/LazyAtHome/LazyAtHome/Html/Nearby.html?_ijt=f1qa0fplfvjokqafd9ujrd23do"
+                />
             </View>
         );
     },
@@ -23,8 +29,6 @@ var SelectAddress = React.createClass({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     }
 });

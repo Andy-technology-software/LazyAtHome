@@ -11,18 +11,26 @@ import {
     AlertIOS,
     Image,
     TextInput,
-    Platform
+    Platform,
+    ScrollView
 } from 'react-native';
 
-//屏幕宽高
+{/*-------屏幕宽高-------*/}
 var Dimensions = require('Dimensions');
 var {width, heigth} = Dimensions.get('window');
 
-//引入详情页
+{/*-------引入外部组件-------*/}
+//详情页
 var HomeDetail = require('./HomeDetail/HomeDetail');
 
-//引入选地址页
+//选地址页
 var SelectAddress = require('./SelectAddress/SelectAddress');
+
+//home上部分view
+var HomeTopView = require('./HomeTopView');
+
+//home中上部分view
+var HomeMiddleView = require('./HomeMiddleView');
 
 var Home = React.createClass({
     render() {
@@ -31,9 +39,16 @@ var Home = React.createClass({
                 {/*首页导航条*/}
                 {this.renderNavBar()}
 
-                <TouchableOpacity onPress={()=>{this.pushToDetail()}}>
-                    <Text>首页</Text>
-                </TouchableOpacity>
+                {/*首页主要内容*/}
+                <ScrollView>
+
+                    {/*头部topview*/}
+                    <HomeTopView />
+
+                    {/*中间-中上view*/}
+                    <HomeMiddleView/>
+
+                </ScrollView>
             </View>
         );
     },
@@ -87,7 +102,7 @@ var Home = React.createClass({
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#e8e8e8',
-        justifyContent: 'center',
+        flex: 1
     },
 
     //导航条样式
