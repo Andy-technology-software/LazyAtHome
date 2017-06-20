@@ -1,0 +1,6 @@
+[
+  {"topImage":"order1", "bottomTitle":"待付款"},
+  {"topImage":"order2", "bottomTitle":"待使用"},
+  {"topImage":"order3", "bottomTitle":"待评价"},
+  {"topImage":"order4", "bottomTitle":"退款/售后"}
+]

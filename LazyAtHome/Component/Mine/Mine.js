@@ -10,7 +10,13 @@ import {
     ScrollView
 } from 'react-native';
 
-//引入cell
+//引入中间view
+var MineTopView = require('./MineTopView');
+
+//引入中间view
+var MineMiddleView = require('./MineMiddleView');
+
+//引入下半部分cell
 CommonMyCell = require('./CommonMyCell');
 
 var Mine = React.createClass({
@@ -18,10 +24,25 @@ var Mine = React.createClass({
         return (
             <View style={styles.container}>
                 <ScrollView>
+                    {/*上部分view*/}
+                    <MineTopView />
+
+                    {/*中间view*/}
+                    <View>
+                        <CommonMyCell
+                            leftIconName='collect'
+                            leftTitle="我的订单"
+                            rightTitle="查看全部订单"
+                        />
+                        <MineMiddleView/>
+
+                    </View>
+
+                    {/*下半部分*/}
                     <View style={{marginTop: 20}}>
                         <CommonMyCell
                             leftIconName='draft'
-                            leftTitle='小马哥钱包'
+                            leftTitle='钱包'
                             rightTitle="账户余额：￥100.0"
                         />
                         <CommonMyCell
