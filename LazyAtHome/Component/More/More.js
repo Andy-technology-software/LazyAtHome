@@ -87,7 +87,7 @@ var More = React.createClass({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#f8f8f8',
     },
 
     //导航view

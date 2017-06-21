@@ -32,6 +32,12 @@ var HomeTopView = require('./HomeTopView');
 //home中上部分view
 var HomeMiddleView = require('./HomeMiddleView');
 
+//home中下部分view
+var HomeMiddleBottomView = require('./HomeMiddleBottomView');
+
+//购物中心
+var ShopCenter = require('./HomeShopCenter');
+
 var Home = React.createClass({
     render() {
         return (
@@ -48,9 +54,30 @@ var Home = React.createClass({
                     {/*中间-中上view*/}
                     <HomeMiddleView/>
 
+                    {/*中下部分*/}
+                    <HomeMiddleBottomView
+                        popTopHome={(data)=>{this.pushToDetail(data)}}
+                    />
+
+                    {/*购物中心*/}
+                    <ShopCenter/>
+
                 </ScrollView>
             </View>
         );
+    },
+
+    // 跳转到二级界面
+    pushToDetail(data){
+
+        alert(data);
+
+        // this.props.navigator.push(
+        //     {
+        //         component: HomeDetail, // 要跳转的版块
+        //         title:'详情页'
+        //     }
+        // );
     },
 
     //首页导航条
@@ -89,19 +116,11 @@ var Home = React.createClass({
             title: '选择地址'
         });
     },
-
-    //跳转二级界面
-    pushToDetail(){
-        this.props.navigator.push({
-            component: HomeDetail,
-            title: '详情'
-        });
-    }
 });
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#f8f8f8',
         flex: 1
     },
 
@@ -126,7 +145,7 @@ const styles = StyleSheet.create({
         height: Platform.OS == 'ios' ? 35 : 30,
         backgroundColor: 'white',
         //针对安卓适配一下
-        marginTop: Platform.OS == 'ios' ? 18 : 0,
+        marginTop: Platform.OS == 'ios' ? 20 : 0,
         //设置圆角
         borderRadius: 16,
         //内左边距
@@ -135,14 +154,15 @@ const styles = StyleSheet.create({
 
     navRightViewStyle:{
         flexDirection: 'row',
-        height: 64,
         alignItems: 'center'
     },
 
     //设置右边导航图片
     navRightImgStyle:{
         width: Platform.OS == 'ios' ? 28 : 24,
-        height: Platform.OS == 'ios' ? 28 : 24
+        height: Platform.OS == 'ios' ? 28 : 24,
+
+
     }
 });
 

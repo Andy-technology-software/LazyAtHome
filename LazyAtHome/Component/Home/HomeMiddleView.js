@@ -15,6 +15,12 @@ import {
 var Dimensions = require('Dimensions');
 var {width, heigth} = Dimensions.get('window');
 
+//引入外部数据
+var TopMiddleData = require('../../LocalData/HomeTopMiddleLeft.json');
+
+//home中部分共同样式view
+var  HomeMiddleCommonView = require('./HomeMiddleCommonView');
+
 var HomeMiddleView = React.createClass({
     render() {
         return (
@@ -23,7 +29,10 @@ var HomeMiddleView = React.createClass({
                 {this.renderLeftView()}
 
                 {/*右边*/}
-                {this.renderRightView()}
+                <View style={styles.rightViewStyle}>
+                    {this.renderRightView()}
+                </View>
+
             </View>
         );
     },
@@ -32,7 +41,7 @@ var HomeMiddleView = React.createClass({
     renderLeftView(){
         return(
             <View style={styles.leftOutViewStyle}>
-                <Image style={{width: width * 0.5, height: width * 0.4}}
+                <Image style={{width: width * 0.4, height: width * 0.3}}
                        source={{uri: 'https://p1.meituan.net/wedding/4570371c129ce5cc93bd9521ff193b9a346314.jpg'}} />
             </View>
         );
@@ -40,32 +49,49 @@ var HomeMiddleView = React.createClass({
 
     //右边
     renderRightView(){
-        return(
-            <View style={styles.rightOutViewStyle}>
-                <Image style={{width: width * 0.5, height: width * 0.2}}
-                       source={{uri: 'https://p1.meituan.net/activityback/6302ab2e9d3b041e0b3e57984492ce65323088.jpg'}} />
-                <Image style={{width: width * 0.5, height: width * 0.2, marginTop: 0.5}}
-                       source={{uri: 'https://qcloud.dpfile.com/pc/VHMaElO_AdN8lsDZcGmJSHiOU8u7bCE3hcelYGLg4VU0yV8ZGtgE6o8T5V5GQf42DHHF6TtwrLv9HRb4p3FZSQ.jpg'}} />
-            </View>
-        );
+        //组件数组
+        var  itemArr = [];
+        //取出具体数据
+        var rightData = TopMiddleData.dataRight;
+        //遍历
+        for (var i = 0; i < rightData.length; i++){
+            itemArr.push(
+                <HomeMiddleCommonView
+                    key={i}
+                    title={rightData[i].title}
+                    subTitle={rightData[i].subTitle}
+                    rightIcon={rightData[i].rightImage}
+                    titleColor={rightData[i].titleColor}
+                />
+            );
+        }
+        return itemArr;
     },
 
 });
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
         backgroundColor: '#F5FCFF',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginTop: 10
     },
 
     leftOutViewStyle: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        width: width / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: '#d8d8d8',
+        borderBottomWidth: 1
     },
 
     rightOutViewStyle: {
         backgroundColor: 'white',
         marginLeft: 0.5
+    },
+
+    rightViewStyle: {
     },
 
 });

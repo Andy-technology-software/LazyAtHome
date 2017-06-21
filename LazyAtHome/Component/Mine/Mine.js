@@ -85,7 +85,7 @@ var Mine = React.createClass({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#f8f8f8',
         flex: 1
     }
 });
