@@ -50,7 +50,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
 
         width: width,
-        height: width * 0.4
+        height: width * 0.4,
+
+        marginTop: -20
     },
 
     section0Style:{

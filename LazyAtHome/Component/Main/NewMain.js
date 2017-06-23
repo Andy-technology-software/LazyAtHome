@@ -20,12 +20,12 @@ var Home = require('../Home/Home');
 var Shop = require('../Shop/Shop');
 var Mine = require('../Mine/Mine');
 var More = require('../More/More');
-
+var Circle = require('../Circle/Circle');
 class Main extends Component{
     constructor(){
         super();
         this.state = {
-            selectedTab: 'home'
+            selectedTab: 'shop'
         }
     }
 
@@ -40,7 +40,14 @@ class Main extends Component{
                     selected={this.state.selectedTab === 'home'}
                     selectedTitleStyle={styles.selectedTitleStyle}
                     >
-                    <Home/>
+                    <NavigatorIOS
+                        initialRoute={{
+                          component: Home,
+                          title: '首页',
+                        }}
+                        style={{flex: 1}}
+                        navigationBarHidden={true}
+                    />
                 </TabNavigator.Item>
 
                 <TabNavigator.Item
@@ -57,6 +64,29 @@ class Main extends Component{
                           title: '商铺',
                         }}
                         style={{flex: 1}}
+                        titleTextColor='white'
+                        barTintColor='orange'
+                        translucent={false}
+                    />
+                </TabNavigator.Item>
+
+                <TabNavigator.Item
+                    title='圈子'  // 传递变量,一定要加{}
+                    renderIcon={() => <Image source={{uri: 'icon_tabbar_misc'}} style={styles.iconStyle}/>} // 图标
+                    renderSelectedIcon={() =><Image source={{uri: 'icon_tabbar_misc_selected'}} style={styles.iconStyle}/>}   // 选中的图标
+                    onPress={()=>{this.setState({selectedTab:'circle'})}}
+                    selected={this.state.selectedTab === 'circle'}
+                    selectedTitleStyle={styles.selectedTitleStyle}
+                >
+                    <NavigatorIOS
+                        initialRoute={{
+                          component: Circle,
+                          title: '圈子',
+                        }}
+                        style={{flex: 1}}
+                        titleTextColor='white'
+                        barTintColor='orange'
+                        translucent={false}
                     />
                 </TabNavigator.Item>
 
@@ -68,19 +98,16 @@ class Main extends Component{
                     selected={this.state.selectedTab === 'mine'}
                     selectedTitleStyle={styles.selectedTitleStyle}
                 >
-                    <Mine/>
+                    <NavigatorIOS
+                        initialRoute={{
+                          component: Mine,
+                          title: '首页',
+                        }}
+                        style={{flex: 1}}
+                        navigationBarHidden={true}
+                    />
                 </TabNavigator.Item>
 
-                <TabNavigator.Item
-                    title='更多'  // 传递变量,一定要加{}
-                    renderIcon={() => <Image source={{uri: 'icon_tabbar_misc'}} style={styles.iconStyle}/>} // 图标
-                    renderSelectedIcon={() =><Image source={{uri: 'icon_tabbar_misc_selected'}} style={styles.iconStyle}/>}   // 选中的图标
-                    onPress={()=>{this.setState({selectedTab:'more'})}}
-                    selected={this.state.selectedTab === 'more'}
-                    selectedTitleStyle={styles.selectedTitleStyle}
-                >
-                    <More/>
-                </TabNavigator.Item>
             </TabNavigator>
         );
     }

@@ -100,7 +100,8 @@ HomeTopView = React.createClass({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        marginTop:  -20
     },
 
     indicatorViewStyle: {

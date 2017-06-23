@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     navBarStyle:{
         //此处针对安卓适配一下
         height: Platform.OS == 'ios' ? 64 : 44,
-        backgroundColor: 'rgb(255,96,0)',
+        backgroundColor: 'orange',
         //设置主轴方向
         flexDirection: 'row',
 
