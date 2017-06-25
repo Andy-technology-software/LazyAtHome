@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 80,
         borderLeftColor: '#d8d8d8',
-        borderLeftWidth: 1,
+        borderLeftWidth: 0.5,
         borderBottomColor: '#d8d8d8',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
     },
 
     rightImageStyle: {
-        width: 90,
+        width: 70,
         height: 60,
         marginRight: 5
     },
