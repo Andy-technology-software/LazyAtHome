@@ -21,6 +21,12 @@ var {width, height} = Dimensions.get('window');
 var config = require('../Common/Config');
 var request = require('../Common/Request');
 
+//声明一个缓存  来缓存列表里边所有的数据
+var cachedResults = {
+    nextPage: 1,
+    items: [],//缓存的数据列表
+}
+
 var Shop = React.createClass({
     //设置初始值
     getInitialState(){
@@ -28,6 +34,7 @@ var Shop = React.createClass({
         var ds = new ListView.DataSource({rowHasChanged:(r1, r2) => r1 !== r2});
         //设置返回数据
         return{
+            isLoadingTail: false,
             dataSource:ds.cloneWithRows([])
         }
     },
@@ -37,16 +44,77 @@ var Shop = React.createClass({
             <View style={{flex: 1, backgroundColor: 'white', marginBottom: 64}}>
                 <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={this.renderRow}
+                    renderRow={this._renderRow}
                     enableEmptySections = {true}
+                    //触底加载更多
+                    onEndReached={this._fetchMoreData()}
+                    //距离底部还有多少  就是快要触底 20是个布局尺寸
+                    onEndReachedThreshold={20}
                 >
                 </ListView>
             </View>
         );
     },
 
+    //加载数据
+    _fetchData(page){
+        //修改请求状态
+        this.setState({
+            isLoadingTail: true
+        })
+
+        var that = this;
+        request.get(config.api.base + config.api.FAXIANXINPIN, {
+            pnum: page,
+            jingdu: '120.16281373397624',
+            weidu: '35.963475831545807',
+            num: '10',
+            type: '1',
+            userid: '1'
+        })
+            .then((data) => {
+                var temArr = [];
+                if (data.result) {
+                    //请求来的数据
+                    temArr = JSON.parse(data.data)
+                    //拿到已有的数据
+                    var items = cachedResults.items.slice();
+                    //对已有数据进行追加
+                    items = items.concat(temArr);
+                    //把新的数据存到缓存中
+                    cachedResults.items = items;
+                    this.setState({
+                        isLoadingTail: false,
+                        dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
+                    })
+                }
+            })
+            .catch((error) => {
+                this.setState({
+                    isLoadingTail: false
+                })
+                console.error(error);
+            })
+    },
+
+    //下拉加载更多数据
+    _fetchMoreData() {
+        if (!this._hasMore() || this.state.isLoadingTail) {
+            //没有更多数据了 或者  已经在加载中。。。。
+            return
+        }
+        cachedResults.nextPage = cachedResults.nextPage + 1;
+        var page = cachedResults.nextPage;
+        this._fetchData(page);
+    },
+
+    //是否还有更多数据  新数据
+    _hasMore() {
+        return false;
+    },
+
     //展示列表
-    renderRow(rowData,sectionID,rowID,highlightRow){
+    _renderRow(rowData,sectionID,rowID,highlightRow){
         console.log('一共有：' + rowData.length);
         return(
             <TouchableOpacity onPress={()=>{}} activeOpacity={0.5}>
@@ -71,33 +139,8 @@ var Shop = React.createClass({
 
     //组件安装完毕以后  进行异步数据获取
     componentDidMount () {
-        this._fetchData()
+        this._fetchData(1)
     },
-
-    _fetchData(){
-        var that = this;
-        request.get(config.api.base + config.api.FAXIANXINPIN, {
-            pnum: '4',
-            jingdu: '120.16281373397624',
-            weidu: '35.963475831545807',
-            num: '10',
-            type: '1',
-            userid: '1'
-        })
-            .then((data) => {
-                var temArr = [];
-                if (data.result) {
-                    temArr = JSON.parse(data.data)
-                    console.log(temArr);
-                    this.setState({
-                        dataSource: this.state.dataSource.cloneWithRows(temArr)
-                    })
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-    }
 
 });
 

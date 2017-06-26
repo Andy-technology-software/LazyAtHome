@@ -71,15 +71,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 80,
         borderLeftColor: '#d8d8d8',
-        borderLeftWidth: 1,
+        borderLeftWidth: 0.5,
         borderBottomColor: '#d8d8d8',
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
     },
 
     rightImageStyle: {
+<<<<<<< HEAD
         width: 60,
         height: 50,
         marginRight: 10
+=======
+        width: 70,
+        height: 60,
+        marginRight: 5
+>>>>>>> b4f8f26c1e36a877362d59ef5bb4289d511ab13b
     },
 
 });
