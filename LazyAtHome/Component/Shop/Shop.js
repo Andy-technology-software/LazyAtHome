@@ -54,9 +54,8 @@ var Shop = React.createClass({
                     <Image source={{uri: 'https://imgsa.baidu.com/news/q%3D100/sign=8eb105ab2234349b72066a85f9eb1521/b8389b504fc2d5622ea9345ced1190ef77c66cda.jpg'}} style={styles.imageStyle}/>
                     <View style={styles.cellViewStyle1}>
                         <View>
-                            <Text style={styles.topTitleStyle}>{rowData.industry}</Text>
-                            <Text style={styles.topTitleStyle}>{rowData.remark}</Text>
-                            <Text style={styles.bottomTitleStyle}>￥{rowData.weidu}</Text>
+                            <Text style={styles.topTitleStyle} numberOfLines={1}>{rowData.industry}</Text>
+                            <Text style={styles.topSubtitleStyle} numberOfLines={2}>{rowData.remark}</Text>
                         </View>
 
                         <View style={styles.distanceViewStyle}>
@@ -124,7 +123,13 @@ const styles = StyleSheet.create({
     topTitleStyle:{
         fontSize:16,
         width:width - 120,
-        marginBottom:15
+        marginBottom:10,
+    },
+
+    topSubtitleStyle: {
+        fontSize:14,
+        width:width - 120,
+        marginBottom:10,
     },
 
     bottomTitleStyle:{

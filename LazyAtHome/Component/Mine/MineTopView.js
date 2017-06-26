@@ -11,7 +11,19 @@ import {
     TouchableOpacity
 } from 'react-native';
 
-//宽高
+{/**选图**/}
+var ImagePicker = require('react-native-image-picker');
+var options = {
+    title: 'Select Avatar',
+    customButtons: [
+        {name: 'fb', title: 'Choose Photo from Facebook'},
+    ],
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
+
 //屏幕宽高
 var Dimensions = require('Dimensions');
 var {width, heigth} = Dimensions.get('window');
@@ -50,7 +62,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
 
         width: width,
-        height: width * 0.4,
+        height: width,
 
         marginTop: -20
     },
@@ -58,7 +70,8 @@ const styles = StyleSheet.create({
     section0Style:{
         marginLeft: 10,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: width/2 + 20
     },
 
     headImageStyle:{

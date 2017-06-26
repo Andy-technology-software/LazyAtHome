@@ -15,6 +15,9 @@ import {
     ScrollView
 } from 'react-native';
 
+{/*-------引入扫码-------*/}
+// import { QRScannerView } from 'ac-qrcode';
+
 {/*-------屏幕宽高-------*/}
 var Dimensions = require('Dimensions');
 var {width, heigth} = Dimensions.get('window');
@@ -87,7 +90,7 @@ var Home = React.createClass({
 
                 {/*左边*/}
                 <TouchableOpacity onPress={()=>{this.pushToSelectAddress()}}>
-                    <Text style={{color: 'white'}}>广州</Text>
+                    <Text style={styles.leftNavTitleStyle}>广州</Text>
                 </TouchableOpacity>
 
                 {/*中间*/}
@@ -97,9 +100,9 @@ var Home = React.createClass({
                 />
                 {/*右边*/}
                 <View style={styles.navRightViewStyle}>
-                    <TouchableOpacity onPress={()=>{AlertIOS.alert('点击通知')}}>
-                        <Image source={{uri: 'icon_homepage_message'}} style={styles.navRightImgStyle} />
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity onPress={()=>{AlertIOS.alert('点击通知')}}>*/}
+                        {/*<Image source={{uri: 'icon_homepage_message'}} style={styles.navRightImgStyle} />*/}
+                    {/*</TouchableOpacity>*/}
 
                     <TouchableOpacity onPress={()=>{AlertIOS.alert('点击扫码')}}>
                         <Image source={{uri: 'icon_homepage_scan'}} style={styles.navRightImgStyle} />
@@ -149,12 +152,15 @@ const styles = StyleSheet.create({
         //设置圆角
         borderRadius: 16,
         //内左边距
-        paddingLeft: 8
+        paddingLeft: 8,
+        fontSize: 14
     },
 
     navRightViewStyle:{
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 44,
+        marginTop: 20
     },
 
     //设置右边导航图片
@@ -163,6 +169,12 @@ const styles = StyleSheet.create({
         height: Platform.OS == 'ios' ? 28 : 24,
 
 
+    },
+
+    leftNavTitleStyle: {
+        color: 'white',
+        marginTop: 20,
+        height: 44,
     }
 });
 

@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
     },
 
     rightImageStyle: {
-        width: 90,
-        height: 60,
-        marginRight: 5
+        width: 60,
+        height: 50,
+        marginRight: 10
     },
 
 });

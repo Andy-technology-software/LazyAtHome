@@ -10,6 +10,10 @@ import {
     ScrollView
 } from 'react-native';
 
+//屏幕宽高
+var Dimensions = require('Dimensions');
+var {width, heigth} = Dimensions.get('window');
+
 //引入中间view
 var MineTopView = require('./MineTopView');
 
@@ -25,7 +29,9 @@ var Mine = React.createClass({
             <View style={styles.container}>
                 <ScrollView
                     //吸顶效果
-
+                    showsVerticalScrollIndicator={false}
+                    contentInset = {{top: -width/2}}
+                    contentOffset = {{y:width/2}}
                 >
                     {/*上部分view*/}
                     <MineTopView />
