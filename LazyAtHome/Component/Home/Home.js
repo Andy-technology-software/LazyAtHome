@@ -74,7 +74,7 @@ var Home = React.createClass({
     pushToDetail(data){
 
         alert(data);
-
+        //要跳转
         // this.props.navigator.push(
         //     {
         //         component: HomeDetail, // 要跳转的版块
