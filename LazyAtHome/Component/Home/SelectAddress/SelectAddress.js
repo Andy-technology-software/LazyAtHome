@@ -28,7 +28,7 @@ var SelectAddress = React.createClass({
 
                 {/*地图*/}
                 <SelectAddWebView
-                    url="http://localhost:63342/LazyAtHome/Html/Nearby.html?_ijt=4thvgi9sh8d4uvi163lgts0qtb"
+                    url="http://localhost:63342/LazyAtHome/Html/Nearby.html?_ijt=956taef149ugqs49gb8cigde05"
                 />
             </View>
         );

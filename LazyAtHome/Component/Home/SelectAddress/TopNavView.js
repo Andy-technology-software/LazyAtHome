@@ -41,7 +41,7 @@ var TopNvaView = React.createClass({
 
     //返回上一层
     popView(){
-
+        this.props.navigator.pop()
     }
 });
 

@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
 });
 
 //输出组件类
-module.exports = Main;
+module.exports = NewMain;
