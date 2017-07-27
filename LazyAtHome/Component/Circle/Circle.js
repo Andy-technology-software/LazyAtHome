@@ -10,7 +10,8 @@ import {
     ListView,
     TouchableOpacity,
     Image,
-    AlertIOS
+    AlertIOS,
+    RefreshControl
 } from 'react-native';
 
 //获取宽高
@@ -39,6 +40,12 @@ var Circle = React.createClass({
         }
     },
 
+    /*
+    * //距离底部还有多少  就是快要触底 20是个布局尺寸
+     onEndReachedThreshold={20}
+     //触底加载更多
+     onEndReached={this._fetchMoreData()}
+    * */
     render() {
         return (
             <View style={{flex: 1, backgroundColor: 'white', marginBottom: 64}}>
@@ -46,10 +53,16 @@ var Circle = React.createClass({
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
                     enableEmptySections = {true}
-                    //距离底部还有多少  就是快要触底 20是个布局尺寸
-                    onEndReachedThreshold={20}
-                    //触底加载更多
-                    onEndReached={this._fetchMoreData()}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={this._onRefresh}
+                        tintColor="#ff6600"
+                        title="拼命加载中..."
+                      />
+                    }
                 >
                 </ListView>
             </View>
@@ -85,10 +98,18 @@ var Circle = React.createClass({
                     items = items.concat(temArr);
                     //把新的数据存到缓存中
                     cachedResults.items = items;
-                    this.setState({
-                        isLoadingTail: false,
-                        dataSource: this.state.dataSource.cloneWithRows(cachedResults.items),
-                    })
+                    if (page !== 1) {
+                        that.setState({
+                            isLoadingTail:false,
+                            dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
+                        })
+                    }
+                    else{
+                        that.setState({
+                            isRefreshing:false,
+                            dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
+                        })
+                    }
                 }
             })
             .catch((error) => {
@@ -99,9 +120,19 @@ var Circle = React.createClass({
             })
     },
 
-    //下拉加载更多数据
+    //下拉刷新
+    _onRefresh(){
+        // AlertIOS.alert('1');
+        if (this.state.isRefreshing || this._hasMore()) {
+            return
+        }
+
+        this._fetchData(1)
+    },
+
+    //上拉加载更多数据
     _fetchMoreData() {
-        AlertIOS.alert('下拉加载了需要');
+        AlertIOS.alert('2');
         if (!this._hasMore() || this.state.isLoadingTail) {
             //没有更多数据了 或者  已经在加载中。。。。
             return
