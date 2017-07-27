@@ -8,7 +8,8 @@ import {
     Text,
     View,
     Image,
-    TouchableOpacity
+    TouchableOpacity,
+    AlertIOS
 } from 'react-native';
 
 {/*-------屏幕宽高-------*/}
@@ -18,7 +19,9 @@ var {width, heigth} = Dimensions.get('window');
 var TopNvaView = React.createClass({
     getDefaultProps(){
         return{
-            title: ''
+            title: '',
+            // 回调函数
+            popTopSelectAddress: null
         }
     },
 
@@ -28,7 +31,7 @@ var TopNvaView = React.createClass({
                 <View style={styles.contenViewStyle}>
                     <TouchableOpacity activeOpacity={0.5} onPress={()=>this.popView()}>
                         <View style={styles.backViewStyle}>
-                            <Image source={{uri: 'navigationbar_arrow_up'}} style={styles.backImageStyle}/>
+                            <Image source={{uri: 'fh'}} style={styles.backImageStyle}/>
                         </View>
                     </TouchableOpacity>
                     <View style={styles.titleViewStyle}>
@@ -41,8 +44,10 @@ var TopNvaView = React.createClass({
 
     //返回上一层
     popView(){
-        this.props.navigator.pop()
+        // 继续执行回调函数
+        this.props.popTopSelectAddress();
     }
+
 });
 
 const styles = StyleSheet.create({

@@ -15,6 +15,7 @@ module.exports = {
         base:'http://os.ehuizhan.com.cn/app/',
         // base:'http://localhost:1234/',
         FAXIANXINPIN:'find!nearby.action',
+        FAXIANLIUYANBAN:'find!findguestbook.action',
         comment:'api/comments',
         signup:'api/u/signup',
         verify:'api/u/verify',

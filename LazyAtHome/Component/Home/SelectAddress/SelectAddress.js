@@ -8,7 +8,8 @@ import {
     Text,
     View,
     TouchableOpacity,
-    WebView
+    WebView,
+    AlertIOS
 } from 'react-native';
 
 {/*-----引入外部组件--webView---*/}
@@ -24,15 +25,21 @@ var SelectAddress = React.createClass({
                 {/*导航*/}
                 <TopNavView
                     title="地图"
+                    popTopSelectAddress={()=>{this.popToHome()}}
                 />
 
                 {/*地图*/}
                 <SelectAddWebView
-                    url="http://localhost:63342/LazyAtHome/Html/Nearby.html?_ijt=956taef149ugqs49gb8cigde05"
+                    url="http://192.168.1.16:63342/LazyAtHome/Html/Nearby.html?_ijt=ijsupg67ekvsf387k2ho51s6qe"
                 />
             </View>
         );
     },
+
+    //返回响应
+    popToHome() {
+        this.props.navigator.pop();
+    }
 
 });
 

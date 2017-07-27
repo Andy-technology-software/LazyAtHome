@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 /*************引入Main*************/
-var Main = require('./Component/Main/Main');
+var Main = require('./Component/Main/NewMain');
 
 export default class LazyAtHome extends Component {
   render() {

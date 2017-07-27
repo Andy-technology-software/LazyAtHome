@@ -25,7 +25,7 @@ class Main extends Component{
     constructor(){
         super();
         this.state = {
-            selectedTab: 'shop'
+            selectedTab: 'home'
         }
     }
 
@@ -127,4 +127,4 @@ const styles = StyleSheet.create({
 });
 
 //输出组件类
-module.exports = NewMain;
+module.exports = Main;

@@ -13,6 +13,10 @@ import {
     AlertIOS
 } from 'react-native';
 
+{/*-------引入外部组件-------*/}
+//详情页
+var ShopDetail = require('./ShopDetail/ShopDetail');
+
 //获取宽高
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -113,11 +117,19 @@ var Shop = React.createClass({
         return false;
     },
 
+    _didSelectDetail() {
+        this.props.navigator.push({
+            title: '详情',
+            component: ShopDetail,
+            backButtonIcon: Image.propTypes.source
+        });
+    },
+
     //展示列表
     _renderRow(rowData,sectionID,rowID,highlightRow){
         console.log('一共有：' + rowData.length);
         return(
-            <TouchableOpacity onPress={()=>{}} activeOpacity={0.5}>
+            <TouchableOpacity onPress={this._didSelectDetail} activeOpacity={0.5}>
                 <View style={styles.cellViewStyle}>
                     <Image source={{uri: 'https://imgsa.baidu.com/news/q%3D100/sign=8eb105ab2234349b72066a85f9eb1521/b8389b504fc2d5622ea9345ced1190ef77c66cda.jpg'}} style={styles.imageStyle}/>
                     <View style={styles.cellViewStyle1}>
@@ -127,7 +139,7 @@ var Shop = React.createClass({
                         </View>
 
                         <View style={styles.distanceViewStyle}>
-                            <Image source={{uri: 'icon_tabbar_mine_selected'}} style={{width: 20, height: 20}}/>
+                            <Image source={{uri: 'guiji'}} style={{width: 20, height: 20}}/>
                             <Text>{rowData.distance.substr(0,4)} km</Text>
                         </View>
                     </View>
