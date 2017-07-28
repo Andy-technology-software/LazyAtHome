@@ -63,6 +63,8 @@ var LazyAtHome = React.createClass({
         );
     },
 
+    //
+
     _afterLogin() {
         var that = this
 
@@ -120,7 +122,6 @@ var LazyAtHome = React.createClass({
                     break;
             }
         });
-        
     },
 });
 
