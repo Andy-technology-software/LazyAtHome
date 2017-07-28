@@ -12,7 +12,7 @@ import {
 {/*-----引入外部组件--导航---*/}
 import TopNavView from '../../Home/SelectAddress/TopNavView';
 
-ShopDetail = React.createClass({
+var ShopDetail = React.createClass({
     render() {
         return (
             <View>

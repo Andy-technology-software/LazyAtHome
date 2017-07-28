@@ -11,7 +11,8 @@ import {
     TouchableOpacity,
     Image,
     AlertIOS,
-    RefreshControl
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
 
 //获取宽高
@@ -36,33 +37,33 @@ var Circle = React.createClass({
         //设置返回数据
         return{
             isLoadingTail: false,
-            dataSource:ds.cloneWithRows([])
+            dataSource:ds.cloneWithRows([]),
+            isRefreshing: false,
+            hasMoreData: true
         }
     },
 
-    /*
-    * //距离底部还有多少  就是快要触底 20是个布局尺寸
-     onEndReachedThreshold={20}
-     //触底加载更多
-     onEndReached={this._fetchMoreData()}
-    * */
     render() {
         return (
             <View style={{flex: 1, backgroundColor: 'white', marginBottom: 64}}>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
-                    enableEmptySections = {true}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                     refreshControl={
                       <RefreshControl
                         refreshing={this.state.isRefreshing}
-                        onRefresh={this._onRefresh}
+                        onRefresh={() => this._onRefresh()}
                         tintColor="#ff6600"
                         title="拼命加载中..."
                       />
                     }
+
+                    onEndReached={this._fetchMoreData}
+                    onEndReachedThreshold={20}//即将滑到底部的时候 20是布局尺寸dp
+                    renderFooter={this._renderFooter}
+                    enableEmptySections = {true}
                 >
                 </ListView>
             </View>
@@ -72,16 +73,21 @@ var Circle = React.createClass({
     //加载数据
     _fetchData(page){
         //修改请求状态
-        this.setState({
-            isLoadingTail: true
-        })
+        if (page !== 1) {
+            this.setState({
+                isLoadingTail:true
+            })
+        }
+        else{
+            isRefreshing:true
+        }
 
         var that = this;
         request.get(config.api.base + config.api.FAXIANLIUYANBAN, {
             pnum: page,
             jingdu: '120.16281373397624',
             weidu: '35.963475831545807',
-            num: '10',
+            num: '5',
             userid: '1',
             id:'',
             info:''
@@ -92,19 +98,30 @@ var Circle = React.createClass({
                     //请求来的数据
                     temArr = JSON.parse(data.data)
                     console.log('留言板数据:' + data.data);
-                    //拿到已有的数据
-                    var items = cachedResults.items.slice();
-                    //对已有数据进行追加
-                    items = items.concat(temArr);
-                    //把新的数据存到缓存中
-                    cachedResults.items = items;
+                    if (temArr.length != 5){
+                        this.setState({
+                            hasMoreData: false
+                        })
+                    }
+
                     if (page !== 1) {
+                        //拿到已有的数据
+                        var items = cachedResults.items.slice();
+                        //对已有数据进行追加
+                        items = items.concat(temArr);
+                        //把新的数据存到缓存中
+                        cachedResults.items = items;
+
                         that.setState({
                             isLoadingTail:false,
                             dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
                         })
-                    }
-                    else{
+                    } else{
+                        //拿到已有的数据
+                        var items = temArr;
+                        //把新的数据存到缓存中
+                        cachedResults.items = items;
+
                         that.setState({
                             isRefreshing:false,
                             dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
@@ -123,7 +140,7 @@ var Circle = React.createClass({
     //下拉刷新
     _onRefresh(){
         // AlertIOS.alert('1');
-        if (this.state.isRefreshing || this._hasMore()) {
+        if (this.state.isRefreshing) {
             return
         }
 
@@ -132,8 +149,7 @@ var Circle = React.createClass({
 
     //上拉加载更多数据
     _fetchMoreData() {
-        AlertIOS.alert('2');
-        if (!this._hasMore() || this.state.isLoadingTail) {
+        if (!this.state.hasMoreData || this.state.isLoadingTail) {
             //没有更多数据了 或者  已经在加载中。。。。
             return
         }
@@ -142,11 +158,24 @@ var Circle = React.createClass({
         this._fetchData(page);
     },
 
-    //是否还有更多数据  新数据
-    _hasMore() {
-        return false;
+    //上拉加载的视图
+    _renderFooter(){
+        if (!this.state.hasMoreData) {
+            return(
+                <View style={styles.loadingMore}>
+                    <Text style={styles.loadingText}>没有更多了</Text>
+                </View>
+            )
+        }
+
+        if (!this.state.isLoadingTail) {
+            return <View style={styles.loadingMore}/>
+        }
+
+        return <ActivityIndicator style={styles.loadingMore}/>
     },
 
+    //点击进入详情
     _didSelectDetail() {
         this.props.navigator.push({
             title: '详情',
@@ -224,15 +253,15 @@ const styles = StyleSheet.create({
     },
 
     imageStyle:{
-        width:60,
-        height:60,
-        borderRadius:30,
+        width:49,
+        height:49,
+        borderRadius:49/2,
     },
 
     rightViewStyle: {
         marginLeft:5,
         marginTop:15,
-        marginRight: 76,
+        marginRight: 71,
         flexDirection: 'column'
     },
 
@@ -258,9 +287,9 @@ const styles = StyleSheet.create({
     },
 
     imagesStyle: {
-        width: 80,
-        height: 80,
-        marginRight: 5,
+        width: (width - 90)/3,
+        height: (width - 90)/3,
+        marginRight: 3,
         marginBottom: 5
     },
 
@@ -282,6 +311,15 @@ const styles = StyleSheet.create({
     pinglunImage: {
         width: 16,
         height: 16
+    },
+
+    loadingMore:{
+        marginVertical:20,
+    },
+
+    loadingText:{
+        color:'#777',
+        textAlign:'center'
     }
 });
 
