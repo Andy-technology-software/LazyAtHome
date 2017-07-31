@@ -29,7 +29,7 @@ class SelectAddWebView extends Component{
                             </View>
                         :
                             <WebView
-                                source={{uri: this.state.url}}
+                                source={require('../../../Html/Nearby.html')}
                                 //错误提示
                                 onError={this._showError.bind(this)}
                                 //加载效果

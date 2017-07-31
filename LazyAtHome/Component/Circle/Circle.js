@@ -27,7 +27,14 @@ var request = require('../Common/Request');
 var cachedResults = {
     nextPage: 1,
     items: [],//缓存的数据列表
-}
+};
+
+//查看图片
+var Lightbox = require('react-native-lightbox');
+import Carousel from 'react-native-looped-carousel';
+
+//加载动画
+var Spinner = require('react-native-spinkit');
 
 var Circle = React.createClass({
     //设置初始值
@@ -39,7 +46,12 @@ var Circle = React.createClass({
             isLoadingTail: false,
             dataSource:ds.cloneWithRows([]),
             isRefreshing: false,
-            hasMoreData: true
+            hasMoreData: true,
+            //加载动画
+            types: ['CircleFlip', 'WanderingCubes', 'ChasingDots'],
+            size: 60,
+            color: "#FF8C00",
+            isVisible: true
         }
     },
 
@@ -66,6 +78,8 @@ var Circle = React.createClass({
                     enableEmptySections = {true}
                 >
                 </ListView>
+
+                <Spinner style={styles.spinner} isVisible={this.state.isVisible} size={this.state.size} type={'ChasingDots'} color={this.state.color}/>
             </View>
         );
     },
@@ -75,11 +89,14 @@ var Circle = React.createClass({
         //修改请求状态
         if (page !== 1) {
             this.setState({
+                isVisible: true,
                 isLoadingTail:true
             })
-        }
-        else{
-            isRefreshing:true
+        } else{
+            this.setState({
+                isVisible: true,
+                isRefreshing: true
+            })
         }
 
         var that = this;
@@ -114,6 +131,7 @@ var Circle = React.createClass({
 
                         that.setState({
                             isLoadingTail:false,
+                            isVisible: false,
                             dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
                         })
                     } else{
@@ -124,6 +142,7 @@ var Circle = React.createClass({
 
                         that.setState({
                             isRefreshing:false,
+                            isVisible: false,
                             dataSource:that.state.dataSource.cloneWithRows(cachedResults.items)
                         })
                     }
@@ -131,7 +150,8 @@ var Circle = React.createClass({
             })
             .catch((error) => {
                 this.setState({
-                    isLoadingTail: false
+                    isLoadingTail: false,
+                    isVisible: false,
                 })
                 console.error(error);
             })
@@ -227,7 +247,13 @@ var Circle = React.createClass({
         //遍历创建组件
         for (var i = 0; i < imagesArr.length; i++) {
             itemArr.push(
-                <Image key={i} style={styles.imagesStyle} source={{uri: imagesArr[i]}}/>
+                <Lightbox key={i} renderContent={()=>this._renderCarousel()} underlayColor="white">
+                    <Image
+                        style={styles.imagesStyle}
+                        source={{uri: imagesArr[i]}}
+                    />
+                </Lightbox>
+                // <Image key={i} style={styles.imagesStyle} source={{uri: imagesArr[i]}}/>
             );
         }
         return itemArr;
@@ -236,7 +262,19 @@ var Circle = React.createClass({
     //组件安装完毕以后  进行异步数据获取
     componentDidMount () {
         this._fetchData(1)
-    }
+    },
+
+    _renderCarousel (imageUrl) {
+        return (
+            <Carousel style={{ width: width, height: width }}>
+                <Image
+                    style={{flex: 1}}
+                    resizeMode="contain"
+                    source={{ uri: 'http://cdn.lolwot.com/wp-content/uploads/2015/07/20-pictures-of-animals-in-hats-to-brighten-up-your-day-1.jpg' }}
+                />
+            </Carousel>
+        );
+    },
 });
 
 const styles = StyleSheet.create({
@@ -320,7 +358,14 @@ const styles = StyleSheet.create({
     loadingText:{
         color:'#777',
         textAlign:'center'
-    }
+    },
+
+    spinner: {
+        position: 'absolute',
+        left: width/2 - 30,
+        top: height/2 - 90,
+        bottom: 'auto',
+    },
 });
 
 module.exports = Circle;

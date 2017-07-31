@@ -90,7 +90,9 @@ var Home = React.createClass({
 
                 {/*左边*/}
                 <TouchableOpacity onPress={()=>{this.pushToSelectAddress()}}>
-                    <Text style={styles.leftNavTitleStyle}>广州</Text>
+                    <View style={styles.leftNavTitleViewStyle}>
+                        <Text style={styles.leftNavTitleStyle}>广州</Text>
+                    </View>
                 </TouchableOpacity>
 
                 {/*中间*/}
@@ -171,10 +173,15 @@ const styles = StyleSheet.create({
 
     },
 
+    leftNavTitleViewStyle: {
+        marginTop: 10,
+        height: 44,
+        justifyContent: 'center',
+    },
+
     leftNavTitleStyle: {
         color: 'white',
-        marginTop: 20,
-        height: 44,
+
     }
 });
 

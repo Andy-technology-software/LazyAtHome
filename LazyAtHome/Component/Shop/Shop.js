@@ -121,7 +121,8 @@ var Shop = React.createClass({
         this.props.navigator.push({
             title: '详情',
             component: ShopDetail,
-            backButtonIcon: Image.propTypes.source
+            backButtonIcon: Image.propTypes.source,
+            tabBarHeight: 0
         });
     },
 

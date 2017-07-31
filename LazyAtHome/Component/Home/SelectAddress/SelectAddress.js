@@ -24,14 +24,12 @@ var SelectAddress = React.createClass({
             <View style={styles.container}>
                 {/*导航*/}
                 <TopNavView
-                    title="地图"
+                    title="地址调整"
                     popTopSelectAddress={()=>{this.popToHome()}}
                 />
 
                 {/*地图*/}
-                <SelectAddWebView
-                    url="http://192.168.1.16:63342/LazyAtHome/Html/Nearby.html?_ijt=ijsupg67ekvsf387k2ho51s6qe"
-                />
+                <SelectAddWebView />
             </View>
         );
     },
