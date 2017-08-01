@@ -17,6 +17,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import Carousel from 'react-native-looped-carousel';
 //获取宽高
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -33,7 +34,6 @@ var cachedResults = {
 
 //查看图片
 var Lightbox = require('react-native-lightbox');
-import Carousel from 'react-native-looped-carousel';
 
 //加载动画
 var Spinner = require('react-native-spinkit');
@@ -255,7 +255,7 @@ var Circle = React.createClass({
         //遍历创建组件
         for (var i = 0; i < imagesArr.length; i++) {
             itemArr.push(
-                <Lightbox key={i} renderContent={()=>this._renderCarousel()} underlayColor="white">
+                <Lightbox key={i} renderContent={() => this._renderCarousel(imagesArr[i])} underlayColor="white">
                     <Image
                         style={styles.imagesStyle}
                         source={{uri: imagesArr[i]}}

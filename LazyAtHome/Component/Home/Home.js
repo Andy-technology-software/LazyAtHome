@@ -15,6 +15,10 @@ import {
     ScrollView
 } from 'react-native';
 
+import Modal from 'react-native-modalbox';
+
+import Button from 'react-native-button';
+
 {/*-------引入扫码-------*/}
 // import { QRScannerView } from 'ac-qrcode';
 
@@ -42,11 +46,22 @@ var HomeMiddleBottomView = require('./HomeMiddleBottomView');
 var ShopCenter = require('./HomeShopCenter');
 
 var Home = React.createClass({
+    getInitialState(){
+        return{
+            isOpen: false,
+            isDisabled: false,
+            swipeToClose: true
+        }
+    },
+
     render() {
         return (
             <View style={styles.container}>
                 {/*首页导航条*/}
-                {this.renderNavBar()}
+                {this._renderNavBar()}
+
+                {/*弹出模态视图*/}
+                {this._renderMadule()}
 
                 {/*首页主要内容*/}
                 <ScrollView>
@@ -66,6 +81,7 @@ var Home = React.createClass({
                     <ShopCenter/>
 
                 </ScrollView>
+
             </View>
         );
     },
@@ -83,15 +99,31 @@ var Home = React.createClass({
         // );
     },
 
+    onClose() {
+        console.log('Modal just closed');
+        this.props.tabBar.show();
+    },
+
+    onOpen() {
+        console.log('Modal just openned');
+        this.props.tabBar.hide();
+    },
+
+    onClosingState(state) {
+        console.log('the open/close of the swipeToClose just changed');
+    },
+
+
     //首页导航条
-    renderNavBar(){
+    _renderNavBar(){
         return(
             <View style={styles.navBarStyle}>
 
                 {/*左边*/}
-                <TouchableOpacity onPress={()=>{this.pushToSelectAddress()}}>
+                {/*onPress={()=>{this.pushToSelectAddress()}}*/}
+                <TouchableOpacity onPress={() => this.refs.modal1.open()}>
                     <View style={styles.leftNavTitleViewStyle}>
-                        <Text style={styles.leftNavTitleStyle}>广州</Text>
+                        <Text style={styles.leftNavTitleStyle}>黄岛区</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -111,6 +143,22 @@ var Home = React.createClass({
                     </TouchableOpacity>
                 </View>
             </View>
+        )
+    },
+
+
+    //模态是图
+    _renderMadule(){
+        return(
+            <Modal
+                style={[styles.modal]}
+                ref={"modal1"}
+                swipeToClose={this.state.swipeToClose}
+                onClosed={this.onClose}
+                onOpened={this.onOpen}
+                onClosingState={this.onClosingState}>
+                <Text style={styles.text}>选择小区</Text>
+            </Modal>
         )
     },
 
@@ -187,8 +235,12 @@ const styles = StyleSheet.create({
 
     leftNavTitleStyle: {
         color: 'white',
+    },
 
-    }
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 module.exports = Home;
