@@ -118,9 +118,15 @@ var Home = React.createClass({
     pushToSelectAddress(){
         this.props.navigator.push({
             component: SelectAddress,
-            title: '选择地址'
+            title: '选择地址',
+            passProps:{
+                tabBar: {
+                    hide: () => this.props.tabBar.hide(),
+                    show: () => this.props.tabBar.show()
+                }
+            }
         });
-    },
+    }
 });
 
 const styles = StyleSheet.create({

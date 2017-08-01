@@ -25,13 +25,23 @@ class Main extends Component{
     constructor(){
         super();
         this.state = {
-            selectedTab: 'home'
+            selectedTab: 'home',
+            tabBarHeight: 49
         }
+    }
+
+    handleTabBar(state){
+        this.setState({
+            tabBarHeight: state ? 49 : 0
+        });
     }
 
     render() {
         return (
-            <TabNavigator>
+            <TabNavigator
+                tabBarStyle={{height: this.state.tabBarHeight, overflow: 'hidden'}}
+                sceneStyle={{paddingBottom: this.state.tabBarHeight}}
+                >
                 <TabNavigator.Item
                     title='首页'  // 传递变量,一定要加{}
                     renderIcon={() => <Image source={{uri: 'icon_tabbar_homepage'}} style={styles.iconStyle}/>} // 图标
@@ -44,9 +54,24 @@ class Main extends Component{
                         initialRoute={{
                           component: Home,
                           title: '首页',
+                          passProps: {
+                            tabBar: {
+                              hide: () => this.handleTabBar(false),
+                              show: () => this.handleTabBar(true)
+                            }
+                          }
                         }}
                         style={{flex: 1}}
                         navigationBarHidden={true}
+                        configureScene={(route) => {
+                          return Navigator.SceneConfigs.FloatFromRight
+                        }}
+                        renderScene={(route, navigator) => {
+                          var Component = route.component
+
+                        return <Component {...route.params} navigator={navigator}
+                          />
+                        }}
                     />
                 </TabNavigator.Item>
 
@@ -62,6 +87,12 @@ class Main extends Component{
                         initialRoute={{
                           component: Shop,
                           title: '商铺',
+                          passProps: {
+                            tabBar: {
+                              hide: () => this.handleTabBar(false),
+                              show: () => this.handleTabBar(true)
+                            }
+                          }
                         }}
                         style={{flex: 1}}
                         titleTextColor='white'

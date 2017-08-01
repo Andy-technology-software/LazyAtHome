@@ -15,6 +15,8 @@ import {
     ActivityIndicator
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 //获取宽高
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
@@ -159,7 +161,7 @@ var Circle = React.createClass({
 
     //下拉刷新
     _onRefresh(){
-        // AlertIOS.alert('1');
+        // AlertIOS.alert('2');
         if (this.state.isRefreshing) {
             return
         }
@@ -169,6 +171,7 @@ var Circle = React.createClass({
 
     //上拉加载更多数据
     _fetchMoreData() {
+        // AlertIOS.alert('1');
         if (!this.state.hasMoreData || this.state.isLoadingTail) {
             //没有更多数据了 或者  已经在加载中。。。。
             return
@@ -229,7 +232,12 @@ var Circle = React.createClass({
 
                         <View style={styles.comStyle}>
                             <Text style={{fontSize:12,marginRight:5}}>{rowData.count}</Text>
-                            <Image style={styles.pinglunImage} source={{uri: 'youxiang'}}/>
+                            {/*<Image style={styles.pinglunImage} source={{uri: 'youxiang'}}/>*/}
+                            <Icon
+                                name='ios-chatboxes-outline'
+                                size={16}
+                                style={styles.pinglunImage}
+                            />
                         </View>
 
                     </View>

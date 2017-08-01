@@ -122,7 +122,12 @@ var Shop = React.createClass({
             title: '详情',
             component: ShopDetail,
             backButtonIcon: Image.propTypes.source,
-            tabBarHeight: 0
+            passProps:{
+                tabBar: {
+                    hide: () => this.props.tabBar.hide(),
+                    show: () => this.props.tabBar.show()
+                }
+            }
         });
     },
 

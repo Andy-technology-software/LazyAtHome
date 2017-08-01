@@ -20,6 +20,16 @@ var ShopDetail = React.createClass({
 
             </View>
         );
+    },
+
+    // 渲染组件时隐藏tabbar
+    componentWillMount(){
+        this.props.tabBar.hide();
+    },
+
+    // 销毁组件时显示tabbar
+    componentWillUnmount(){
+        this.props.tabBar.show();
     }
 });
 

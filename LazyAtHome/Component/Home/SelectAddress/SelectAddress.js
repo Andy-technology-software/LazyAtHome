@@ -37,6 +37,16 @@ var SelectAddress = React.createClass({
     //返回响应
     popToHome() {
         this.props.navigator.pop();
+    },
+
+    // 渲染组件时隐藏tabbar
+    componentWillMount(){
+        this.props.tabBar.hide();
+    },
+
+    // 销毁组件时显示tabbar
+    componentWillUnmount(){
+        this.props.tabBar.show();
     }
 
 });
